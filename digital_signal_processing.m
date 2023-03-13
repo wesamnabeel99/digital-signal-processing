@@ -9,7 +9,7 @@ n_samples = 512;
 f = (0:(n_samples-1)) / n_samples * 10000;
 w = 2 * pi * f;
 
-hs = freqs(num_s,den_s,w);
+hs = freqs_manual(num_s,den_s,w);
 
 figure(1)
 subplot(4,1,1)
@@ -33,7 +33,7 @@ num_z = [0.88 -0.35 0.88];
 den_z = [1 -0.35 0.77];
 
 
-[hz, samples] = freqz(num_z,den_z,n_samples);
+[hz, samples] = freqz_manual(num_z,den_z,n_samples);
 subplot(4,1,3)
 plot(samples, 20*log10(abs(hz)), 'o-')
 xlabel('samples')
@@ -51,8 +51,8 @@ title('phase response of H(z)')
 grid on
 axis tight
 
-hn = impz(num_z, den_z, n_samples);
-Hk = fft(hn);
+hn = myimpz(num_z, den_z, n_samples);
+Hk = myfft(hn);
 
 figure(2)
 
@@ -84,3 +84,5 @@ title('H(K) Vs H(S)')
 legend('H(K)','H(S)')
 grid on
 axis tight
+
+
