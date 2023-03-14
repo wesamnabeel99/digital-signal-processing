@@ -66,7 +66,7 @@ grid on
 axis tight
 
 subplot(2,1,2)
-plot(f,unwrap(angle(Hk)));
+plot(f,angle(Hk));
 xlabel('samples')
 ylabel('phase H(K)')
 title('phase response of H(K)')
