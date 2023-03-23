@@ -1,25 +1,32 @@
 function y = myfilter(b, a, x)
-% Apply a digital filter defined by coefficients b and a to a discrete-time signal x
+% This function implements the filter function in MATLAB
+% Inputs:
+%   b - the numerator coefficients of the filter
+%   a - the denominator coefficients of the filter
+%   x - the input signal to be filtered
+% Outputs:
+%   y - the filtered output signal
 
-N = length(x);  % number of input samples
-M = max(length(b), length(a));  % filter order
-d = [zeros(1,M-1) x];  % delay line (initially all zeros)
-y = zeros(1,N);  % output signal
+% Initialize the output vector y with zeros
+y = zeros(size(x));
 
-for n = 1:N
-    % Compute current output sample y(n) using difference equation
-    y(n) = b(1)*d(n+M-1) + b(2)*d(n+M-2);
-    for k = 3:length(b)
-        y(n) = y(n) + b(k)*d(n+M-k);
-    end
-    for k = 2:length(a)
-        if n+M-k > 0 && n+M-k <= N
-            y(n) = y(n) - a(k)*y(n+M-k);
+% Get the lengths of the numerator and denominator coefficient vectors
+nb = length(b);
+na = length(a);
+
+% Iterate over each sample in the input signal
+for n = 1:length(x)
+    % Compute the current output sample y(n) using the difference equation
+    y(n) = b(1)*x(n);
+    for k = 2:nb
+        if n-k+1 > 0
+            y(n) = y(n) + b(k)*x(n-k+1);
         end
     end
-
-    % Shift delay line
-    d = [d(2:end) x(n)];
+    for k = 2:na
+        if n-k+1 > 0
+            y(n) = y(n) - a(k)*y(n-k+1);
+        end
+    end
 end
-
 end

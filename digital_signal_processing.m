@@ -35,7 +35,7 @@ den_z = [1 -0.35 0.77];
 
 [hz, samples] = freqz_manual(num_z,den_z,n_samples);
 subplot(4,1,3)
-plot(samples, 20*log10(abs(hz)), 'o-')
+plot(samples, abs(hz), 'o-')
 xlabel('samples')
 ylabel('Magnitude H(z)')
 title('magnitude response of H(z)')
@@ -57,8 +57,8 @@ Hk = myfft(hn);
 figure(2)
 
 subplot(2,1,1)
-plot(f,abs(Hk))
-xlabel('samples')
+plot(f,abs(Hk) / max(abs(Hk)))
+xlabel('f(Hz)')
 ylabel('Magnitude H(K)')
 title('magnitude response of H(K)')
 legend('H(K)')
@@ -67,7 +67,7 @@ axis tight
 
 subplot(2,1,2)
 plot(f,angle(Hk));
-xlabel('samples')
+xlabel('f(Hz)')
 ylabel('phase H(K)')
 title('phase response of H(K)')
 grid on
@@ -77,12 +77,10 @@ axis tight
 figure(3)
 
 subplot(2,1,1)
-plot(f,abs(Hk),f,abs(hs))
+plot(f,abs(Hk)/max(abs(Hk)),f,abs(hs))
 xlabel('f(Hz)')
 ylabel('Magnitude H(K), H(S)')
 title('H(K) Vs H(S)')
 legend('H(K)','H(S)')
 grid on
 axis tight
-
-
