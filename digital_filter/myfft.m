@@ -2,6 +2,8 @@ function X = myfft(x)
 % Compute the discrete Fourier transform of a signal x using the radix-2
 % Cooley-Tukey algorithm.
 
+
+
 N = length(x);
 
 if N == 1
